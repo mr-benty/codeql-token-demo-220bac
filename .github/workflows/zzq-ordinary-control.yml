@@ -1,0 +1,8 @@
+name: zzq-ordinary-control
+on:
+  pull_request:
+jobs:
+  control:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "ZZQ-ORDINARY-CONTROL-RAN"
